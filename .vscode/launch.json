@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Abrir index.html (Edge)",
+      "type": "msedge",
+      "request": "launch",
+      "file": "${workspaceFolder}/index.html",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Live Server (Edge)",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://127.0.0.1:5500/index.html",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Abrir creditos.html (Edge)",
+      "type": "msedge",
+      "request": "launch",
+      "file": "${workspaceFolder}/creditos.html",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}

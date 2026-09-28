@@ -1,0 +1,104 @@
+# ---------- Sistema operativo ----------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ---------- Editores ----------
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ---------- Node / JS ----------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.npm/
+.yarn/
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+
+# ---------- Salidas de tools/ ----------
+tools/revision-*.json
+tools/revision-*.csv
+tools/revision-*.txt
+tools/componer-*.csv
+
+# ---------- Backups y temporales ----------
+*.tmp
+*.temp
+*.bak
+*.log
+~$*
+
+# ---------- Build output ----------
+dist/
+build/
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.output/
+
+# ---------- Secretos ----------
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets.json
+
+# ---------- Archivos comprimidos y binarios ----------
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+*.iso
+*.dmg
+*.exe
+*.msi
+
+# ---------- Deploy ----------
+.netlify/
+.vercel/
+.deploy/
+
+# ================================================================
+#   NO IGNORAR — archivos necesarios para GitHub Pages
+# ================================================================
+# assets/img/wm/*              
+# assets/json/imagenes-local.json 
+# .nojekyll                     
+!assets/img/wm/.gitkeep
+!assets/data/*.csv
+!data/*.csv

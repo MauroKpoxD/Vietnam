@@ -1,0 +1,45 @@
+{
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": false,
+  "editor.rulers": [100],
+
+  "[powershell]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "[json]": {
+    "editor.tabSize": 2
+  },
+  "[jsonc]": {
+    "editor.tabSize": 2
+  },
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
+
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.file": "index.html",
+  "liveServer.settings.CustomBrowser": "microsoft-edge",
+  "liveServer.settings.NoBrowser": false,
+  "liveServer.settings.AdvanceCustomBrowserCmdLine": "",
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/tools/revision-*.json": true,
+    "**/tools/revision-*.csv": true,
+    "**/tools/revision-*.txt": true,
+    "**/assets/img/wm": true
+  },
+  "files.watcherExclude": {
+    "**/assets/img/wm/**": true
+  }
+}

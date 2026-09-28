@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Auditoria (solo verificar)",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File ./tools/revision.ps1 -SkipDownload",
+      "windows": {
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\tools\\revision.ps1 -SkipDownload"
+      },
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Auditoria + descarga",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File ./tools/revision.ps1",
+      "windows": {
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\tools\\revision.ps1"
+      },
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Restaurar backups .bak",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File ./tools/restaurar.ps1 -Aplicar",
+      "windows": {
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\tools\\restaurar.ps1 -Aplicar"
+      },
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    }
+  ]
+}
