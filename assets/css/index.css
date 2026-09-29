@@ -231,16 +231,24 @@ nav.links a.active{ color: var(--accent); background: var(--accent-soft); }
   margin-top: 18px;
   font-size: 1.05rem;
 }
-.hero .banner-img{
+.hero-media{
   width: 100%;
+}
+
+.hero .banner-img{
+  --hero-img-max-h: 480px;
+  width: 100%;
+  height: auto;
+  max-height: var(--hero-img-max-h);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border);
   display: block;
   object-fit: cover;
-  max-height: 320px;
+  object-position: center;
   filter: saturate(0.9);
 }
+
 .hero .meta-row{
   display: flex;
   gap: 20px;
@@ -737,7 +745,7 @@ html.force-reduced *{
 @media (max-width: 900px){
   .hero{ padding: 48px 0 40px; }
   .hero .grid{ grid-template-columns: 1fr; gap: 32px; }
-  .hero .banner-img{ max-height: 220px; }
+  .hero .banner-img{ max-height: 320px; }
   section{ padding: 56px 0; }
 }
 

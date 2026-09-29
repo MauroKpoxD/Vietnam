@@ -400,6 +400,53 @@
     </div>
   </section>
 
+  <!-- ================================================================
+       AUTOR
+       ================================================================ -->
+  <section id="autor" data-title="Autor">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Autor del proyecto</span>
+        <h2>Quién hizo esto</h2>
+      </div>
+      <p class="section-sub">
+        Responsable del desarrollo, diseño y publicación de esta presentación.
+      </p>
+
+      <div class="autor-card" data-reveal>
+        <div class="autor-avatar">
+          <img
+            id="autor-avatar"
+            src="https://github.com/MauroKpoxD.png?size=400"
+            alt="Avatar de Santiago Luna (@MauroKpoxD)"
+            width="120"
+            height="120"
+            loading="lazy"
+            decoding="async"
+            referrerpolicy="no-referrer">
+        </div>
+
+        <h3 class="autor-nombre">Santiago Luna</h3>
+
+        <p class="autor-user">
+          <a href="https://github.com/MauroKpoxD" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:-2px;margin-right:6px">
+              <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.3 2.8.1 3.2.8.8 1.3 1.9 1.3 3.1 0 4.7-2.8 5.7-5.5 6 .4.4.8 1 .8 2.1v3.1c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/>
+            </svg>
+            @MauroKpoxD
+          </a>
+        </p>
+
+        <div class="autor-divider" aria-hidden="true"></div>
+
+        <ul class="autor-roles">
+          <li>Creación de la web y dominio</li>
+          <li>Programación y lanzamiento a producción con certificados</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <section id="gracias" data-title="Gracias">
     <div class="wrap">
       <div class="gracias-panel" data-reveal>
@@ -504,125 +551,71 @@
   <script src="assets/js/creditos.js?v=9" defer></script>
   <script src="assets/js/bootstrap.js?v=9" defer></script>
 
-  <script>
+    <script>
   (function () {
     'use strict';
 
-    const U = window.Utils || {};
-    const { onReady, bus } = U;
-    let rendered = false;
-
-    async function renderGrid() {
-      if (rendered) return;
-      const grid = document.getElementById('creditos-grid');
-      if (!grid || !window.IMAGENES) return;
-
-      rendered = true;
-      grid.setAttribute('aria-busy', 'true');
-
-      let lista = [];
-      let resumen = {};
+    function copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text).then(() => true, () => false);
+      }
       try {
-        lista = await window.IMAGENES.listarCreditos();
-        resumen = await window.IMAGENES.resumenLicencias();
-      } catch (err) {
-        console.warn('[creditos] error al listar:', err);
-        grid.removeAttribute('aria-busy');
-        return;
-      }
-
-      const filterBar = document.querySelector('[data-filter-bar]');
-      if (filterBar && filterBar.children.length === 0) {
-        const tipos = ['todas', ...Object.keys(resumen).sort()];
-        filterBar.innerHTML = tipos.map(t => {
-          const label = t === 'todas' ? 'Todas' : t;
-          const active = t === 'todas' ? ' active' : '';
-          const count = t === 'todas' ? lista.length : (resumen[t] || 0);
-          return `<button type="button" data-tipo="${esc(t)}" class="${active.trim()}">${esc(label)} <span style="opacity:.6">${count}</span></button>`;
-        }).join('');
-      }
-
-      const resumenEl = document.getElementById('licencias-resumen');
-      if (resumenEl) {
-        resumenEl.innerHTML = Object.entries(resumen)
-          .sort()
-          .map(([lic, n]) => `<span class="pill accent">${esc(lic)} · ${n}</span>`)
-          .join('');
-      }
-
-      const frag = document.createDocumentFragment();
-      lista.forEach(item => {
-        const art = document.createElement('article');
-        art.className = 'credito-img';
-        art.dataset.fuente = item.licencia || 'Sin licencia';
-        art.dataset.year = item.anio || '';
-        art.dataset.autor = item.credito || '';
-        art.dataset.favId = item.id;
-        art.dataset.reveal = '';
-        art.setAttribute('data-reveal-delay', String(Math.floor(Math.random() * 300)));
-
-        art.innerHTML = `
-          <div class="thumb">
-            <img src="${esc(item.url)}" alt="${esc(item.titulo)}" loading="lazy" decoding="async">
-          </div>
-          <div class="info">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px">
-              <h5 style="margin:0">${esc(item.titulo)}</h5>
-              <button type="button"
-                      data-fav
-                      data-fav-id="${esc(item.id)}"
-                      aria-pressed="false"
-                      aria-label="Marcar como favorito"
-                      style="font-size:1.1rem;line-height:1;padding:2px 4px">☆</button>
-            </div>
-            <p class="autor">${esc(item.credito)} · ${esc(item.anio)}</p>
-            <span class="licencia">${esc(item.licencia)}</span>
-            <p style="margin:10px 0 0">
-              <a href="${esc(item.pagina)}" target="_blank" rel="noopener">Ver en Commons ↗</a>
-            </p>
-          </div>
-        `;
-        frag.appendChild(art);
-      });
-
-      grid.innerHTML = '';
-      grid.appendChild(frag);
-      grid.removeAttribute('aria-busy');
-
-      const counter = document.querySelector('[data-resource-count]');
-      if (counter) counter.textContent = lista.length;
-
-      if (window.CreditosPage?.renderFavs) {
-        try { window.CreditosPage.renderFavs(); } catch {}
-      }
-      if (window.CreditosPage?.applyFilters) {
-        try { window.CreditosPage.applyFilters(); } catch {}
-      }
-
-      if (window.Animaciones?.initScrollReveal) {
-        window.Animaciones.initScrollReveal();
-      }
-
-      bus?.emit('creditos:rendered', { total: lista.length });
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return Promise.resolve(ok);
+      } catch { return Promise.resolve(false); }
     }
 
-    function esc(str) {
-      return String(str == null ? '' : str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
+    function setupShare() {
+      const btn = document.querySelector('[data-share]');
+      if (!btn || btn.dataset.shareReady === '1') return;
+      btn.dataset.shareReady = '1';
 
-    if (typeof onReady === 'function') {
-      onReady(() => {
-        if (bus?.on) {
-          bus.on('imagenes:ready', () => renderGrid());
+      btn.addEventListener('click', async () => {
+        const url   = btn.dataset.shareUrl   || location.href;
+        const title = btn.dataset.shareTitle || document.title;
+        const text  = btn.dataset.shareText  || '';
+        const orig  = btn.textContent.trim();
+
+        async function copyFallback() {
+          const ok = await copyToClipboard(url);
+          btn.textContent = ok ? '✓ Enlace copiado' : '✗ No se pudo copiar';
+          btn.classList.add(ok ? 'copied' : 'error');
+          setTimeout(() => {
+            btn.textContent = orig;
+            btn.classList.remove('copied', 'error');
+          }, 1600);
         }
-        setTimeout(() => { if (!rendered) renderGrid(); }, 500);
-        setTimeout(() => { if (!rendered) renderGrid(); }, 1500);
+
+        if (navigator.share) {
+          try {
+            await navigator.share({ title, text, url });
+            btn.textContent = '✓ Compartido';
+            btn.classList.add('copied');
+            setTimeout(() => {
+              btn.textContent = orig;
+              btn.classList.remove('copied');
+            }, 1400);
+          } catch (err) {
+            if (err && err.name === 'AbortError') return;
+            await copyFallback();
+          }
+        } else {
+          await copyFallback();
+        }
       });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupShare, { once: true });
+    } else {
+      setupShare();
     }
   })();
   </script>

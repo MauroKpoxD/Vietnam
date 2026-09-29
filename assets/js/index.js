@@ -438,24 +438,47 @@
   }
 
   function initShareButtons() {
-    $$('[data-share]').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const data = {
-          title: btn.dataset.shareTitle || document.title,
-          text: btn.dataset.shareText  || '',
-          url:  btn.dataset.shareUrl   || location.href
-        };
-        if (navigator.share) {
-          try { await navigator.share(data); } catch {}
-        } else {
-          const ok = await copyToClipboard(data.url);
-          const orig = btn.textContent;
-          btn.textContent = ok ? '✓ Copiado' : '✗ Error';
-          setTimeout(() => (btn.textContent = orig), 1400);
+  $$('[data-share]').forEach(btn => {
+    if (btn.dataset.shareReady === '1') return;
+    btn.dataset.shareReady = '1';
+
+    btn.addEventListener('click', async () => {
+      const data = {
+        title: btn.dataset.shareTitle || document.title,
+        text:  btn.dataset.shareText  || '',
+        url:   btn.dataset.shareUrl   || location.href
+      };
+      const orig = btn.textContent.trim();
+
+      async function fallbackCopy() {
+        const ok = await copyToClipboard(data.url);
+        btn.textContent = ok ? '✓ Enlace copiado' : '✗ No se pudo copiar';
+        btn.classList.add(ok ? 'copied' : 'error');
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove('copied', 'error');
+        }, 1600);
+      }
+
+      if (navigator.share) {
+        try {
+          await navigator.share(data);
+          btn.textContent = '✓ Compartido';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = orig;
+            btn.classList.remove('copied');
+          }, 1400);
+        } catch (err) {
+          if (err && err.name === 'AbortError') return;
+          await fallbackCopy();
         }
-      });
+      } else {
+        await fallbackCopy();
+      }
     });
-  }
+  });
+}
 
   function initPrint() {
     $$('[data-print]').forEach(btn => {
